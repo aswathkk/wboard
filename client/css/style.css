@@ -22,6 +22,10 @@ html, body {
     cursor: url('../img/grab.svg') 0 15, auto;
 }
 
+#canv.eraser {
+    cursor: url('../img/eraser.svg') 0 15, auto;
+}
+
 .pan-view-container {
     transition: all .4s;
     opacity: 0;
@@ -80,11 +84,7 @@ html, body {
     transition: all .2s;
 }
 
-.tool-item.pen svg {
-    margin: .1em;
-}
-
-.tool-item.color-picker svg {
+.tool-item.pen svg, .tool-item.color-picker svg, .tool-item.eraser svg  {
     margin: .1em;
 }
 

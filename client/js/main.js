@@ -13,6 +13,7 @@ var pen = {
         ctx.lineWidth = pen.penThickness;
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
+        ctx.globalCompositeOperation = "source-over";
         pen.drag = true;
         if(e.touches) {
             x = e.touches[0].clientX - canvas.offsetLeft;
@@ -90,6 +91,82 @@ var colorPicker = {
             }, false);
         }
     }
+}
+
+// eraser Tool
+var eraser = {
+    drag: false,
+
+    begin: function (e) {
+        ctx.lineWidth = pen.penThickness;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.strokeStyle = "rgba(0,0,0,1)";
+        eraser.drag = true;
+        if(e.touches) {
+            x = e.touches[0].clientX - canvas.offsetLeft;
+            y = e.touches[0].clientY - canvas.offsetTop;
+        } else {
+            x = e.clientX - canvas.offsetLeft;
+            y = e.clientY - canvas.offsetTop;
+        }
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    },
+
+    move: function (e) {
+        if(eraser.drag) {
+            if(e.touches) {
+                x = e.touches[0].clientX - canvas.offsetLeft;
+                y = e.touches[0].clientY - canvas.offsetTop;
+            } else {
+                x = e.clientX - canvas.offsetLeft;
+                y = e.clientY - canvas.offsetTop;
+            }
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+    },
+
+    stop: function () {
+        eraser.drag = false;
+    },
+
+    // Pen Tool selected
+    select: function () {
+        canvas.className = 'eraser';
+        deselectAllTool(); // Removing Other EventListeners
+
+        // Touch Events
+        canvas.addEventListener('touchstart', eraser.begin, false);
+        canvas.addEventListener('touchmove', eraser.move, false);
+        canvas.addEventListener('touchend', eraser.stop, false);
+
+        // Mouse Events
+        canvas.addEventListener('mousedown', eraser.begin, false);
+        canvas.addEventListener('mousemove', eraser.move, false);
+        canvas.addEventListener('mouseup', eraser.stop, false);
+    },
+
+    deselect: function() {
+
+        // Touch Events
+        canvas.removeEventListener('touchstart', eraser.begin, false);
+        canvas.removeEventListener('touchmove', eraser.move, false);
+        canvas.removeEventListener('touchend', eraser.stop, false);
+
+        // Mouse Events
+        canvas.removeEventListener('mousedown', eraser.begin, false);
+        canvas.removeEventListener('mousemove', eraser.move, false);
+        canvas.removeEventListener('mouseup', eraser.stop, false);  
+    },
+
+    // Initialize Pen tool
+    init: function() {
+        document.querySelector('.tool-item.eraser').addEventListener('click', eraser.select, false);
+    },
+
 }
 
 // Pan Tool
@@ -196,9 +273,11 @@ var pan = {
 function deselectAllTool () {
     pen.deselect();
     pan.deselect();
+    eraser.deselect();
 }
 
 pen.init();
+eraser.init();
 colorPicker.init();
 pan.init();
 
