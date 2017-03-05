@@ -6,7 +6,7 @@ canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
 var pen = {
-    penColor: '#0000ff',
+    penColor: '#000000',
     penThickness: 15,
     drag: false,
 
@@ -61,4 +61,16 @@ var pen = {
 
 }
 
+var colorPicker = {
+    init: function() {
+        var elm = document.querySelectorAll('.color');
+        for(var i = 0; i < elm.length; i++) {
+            elm[i].addEventListener('click', function() {
+                pen.penColor = getComputedStyle(this).backgroundColor;
+            }, false);
+        }
+    }
+}
+
 pen.init();
+colorPicker.init();

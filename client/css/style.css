@@ -20,6 +20,7 @@ html, body {
     left: 50px;
     top: 100px;
     padding: .5em;
+    box-shadow: 0 1px 5px -1px rgba(0,0,0,0.3);
 }
 
 .tool-item {
@@ -47,4 +48,58 @@ html, body {
 
 .tool-item.pen svg {
     margin: .1em;
+}
+
+.tool-item.color-picker svg {
+    margin: .1em;
+}
+
+.tool-item.color-picker:hover #color-picker {
+    display: block;
+    left: 3em;
+}
+
+#color-picker {
+    position: absolute;
+    top: 0;
+    left: 3em;
+    display: none;
+}
+
+.color-picker-container {
+    background: #fff;
+    padding: .1em;
+    margin-left: 2em;
+    box-shadow: 0 1px 5px -1px rgba(0,0,0,0.3);
+}
+
+.color-picker-container::before {
+    content: '';
+    position: absolute;
+    top: 1em;
+    left: .9em;
+    border-top: .6em solid transparent;
+    border-right: .6em solid #fff;
+    border-bottom: .6em solid transparent;
+    border-left: .6em solid transparent;
+}
+
+.color {
+    width: 1.25em;
+    height: 1.25em;
+    background: #000;
+    margin: 1em;
+    border-radius: 50%;
+}
+
+#red {
+    background-color: #f44336;
+}
+
+#green {
+    background-color: #4CAF50;
+}
+
+#blue {
+    background-color: #2196F3;
 }
