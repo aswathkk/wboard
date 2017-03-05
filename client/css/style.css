@@ -6,12 +6,17 @@ html, body {
 }
 
 #canv {
-    background: #ddd;
+    background: #eee;
     border: 5px red solid;
+    position: absolute;
 }
 
 #canv.pen {
     cursor: url('../img/pen.svg') 0 15, auto;
+}
+
+#canv.pan {
+    cursor: url('../img/pan.svg') 0 15, auto;
 }
 
 #tools {
