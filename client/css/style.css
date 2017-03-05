@@ -18,6 +18,36 @@ html, body {
     cursor: url('../img/pan.svg') 0 15, auto;
 }
 
+#canv.pan.grab {
+    cursor: url('../img/grab.svg') 0 15, auto;
+}
+
+.pan-view-container {
+    transition: all .4s;
+    opacity: 0;
+}
+
+#pan-view {
+    background: rgba(255, 255, 255, .5);
+    border: 1px solid #ccc;
+    position: fixed;
+    top: 1em;
+    right: 1em;
+}
+
+.viewbox-container {
+    height: 200px;
+    width: 200px;
+    position: fixed;
+    top: 1em;
+    right: calc(1em + 2px);
+}
+
+.viewbox-container #panviewbox {
+    position: relative;
+    border: red solid 1px;
+}
+
 #tools {
     background: #fff;
     position: fixed;

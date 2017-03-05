@@ -95,6 +95,8 @@ var colorPicker = {
 // Pan Tool
 var pan = {
     drag: false,
+    panView: document.getElementById('pan-view').getContext('2d'),
+    panBox: document.getElementById('panviewbox'),
     panX: canvas.offsetLeft,
     panY: canvas.offsetTop,
     canvasLeft: canvas.offsetWidth - window.innerWidth,
@@ -115,6 +117,7 @@ var pan = {
 
     move: function (e) {
         if(pan.drag) {
+            canvas.className = 'pan grab';
             if(e.touches) {
                 x = e.touches[0].clientX;
                 y = e.touches[0].clientY;
@@ -124,12 +127,16 @@ var pan = {
             }
 
             var left = canvas.offsetLeft + (x - panX);
-            if(left <= 0 && left >= -pan.canvasLeft)
+            if(left <= 0 && left >= -pan.canvasLeft) {
                 canvas.style.left = left + 'px';
+                pan.panBox.style.right = left / 10 + 'px';
+            }
 
             var top = canvas.offsetTop + (y - panY);
-            if(top <= 0 && top >= -pan.canvasTop)
+            if(top <= 0 && top >= -pan.canvasTop) {
                 canvas.style.top = top + 'px';
+                pan.panBox.style.bottom = top / 10 + 'px';
+            }
 
             panX = x;
             panY = y;
@@ -137,6 +144,7 @@ var pan = {
     },
 
     stop: function() {
+        canvas.className = 'pan';
         pan.drag = false;
     },
 
@@ -144,6 +152,13 @@ var pan = {
     select: function() {
         canvas.className = 'pan'; // Setting cursor
         deselectAllTool(); // Removing Other EventListeners
+
+        pan.panView.drawImage(canvas, 0, 0, 200, 200);
+        pan.panBox.style.width = window.innerWidth / 10 + 'px';
+        pan.panBox.style.height = window.innerHeight / 10 + 'px';
+
+        // Displaying panning view box
+        document.querySelector('.pan-view-container').style.opacity = 1;
 
         // Touch Events
         canvas.addEventListener('touchstart', pan.begin, false);
@@ -157,6 +172,9 @@ var pan = {
     },
     
     deselect: function() {
+
+        // Hiding panning view box
+        document.querySelector('.pan-view-container').style.opacity = 0;
 
         // Touch Events
         canvas.removeEventListener('touchstart', pan.begin, false);
