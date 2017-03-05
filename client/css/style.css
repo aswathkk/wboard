@@ -9,3 +9,42 @@ html, body {
     background: #ddd;
     border: 5px red solid;
 }
+
+#canv.pen {
+    cursor: url('../img/pen.svg') 0 15, auto;
+}
+
+#tools {
+    background: #fff;
+    position: fixed;
+    left: 50px;
+    top: 100px;
+    padding: .5em;
+}
+
+.tool-item {
+    cursor: pointer;
+    background: #fff;
+    height: 1.75em;
+    width: 1.75em;
+    padding: .5em;
+    margin-bottom: .5em;
+    border-radius: 50%;
+}
+
+.tool-item:nth-last-child(1) {
+    margin-bottom: 0;
+}
+
+.tool-item:hover svg{
+    fill: #E91E63;
+}
+
+.tool-item svg {
+    fill: #555;
+    transition: fill .2s;
+}
+
+.tool-item.pen svg {
+    margin: .1em;
+}

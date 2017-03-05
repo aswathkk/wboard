@@ -6,8 +6,15 @@ canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
 var pen = {
+    penColor: '#0000ff',
+    penThickness: 15,
+    drag: false,
 
     begin: function (e) {
+        ctx.strokeStyle = pen.penColor;
+        ctx.lineWidth = pen.penThickness;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
         pen.drag = true;
         if(e.touches) {
             x = e.touches[0].clientX - canvas.offsetLeft;
@@ -39,6 +46,8 @@ var pen = {
     },
 
     init: function () {
+        canvas.className = 'pen';
+
         // Touch Events
         canvas.addEventListener('touchstart', pen.begin, false);
         canvas.addEventListener('touchmove', pen.move, false);
