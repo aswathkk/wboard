@@ -1,0 +1,17 @@
+{
+  "name": "wboard",
+  "version": "1.0.0",
+  "description": "Realtime whiteboard",
+  "main": "index.js",
+  "author": "Aswath K",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aswathkk/wboard.git"
+  },
+  "dependencies": {
+    "express": "^4.15.0"
+  }
+}
