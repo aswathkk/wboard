@@ -87,7 +87,9 @@ var colorPicker = {
         var elm = document.querySelectorAll('.color');
         for(var i = 0; i < elm.length; i++) {
             elm[i].addEventListener('click', function() {
-                pen.penColor = getComputedStyle(this).backgroundColor;
+                var color = getComputedStyle(this).backgroundColor;
+                pen.penColor = color;
+                document.querySelector('.tool-item.color-picker svg').style.fill = color;
             }, false);
         }
     }
@@ -124,7 +126,7 @@ var pan = {
 
             canvas.style.left = canvas.offsetLeft + (x - panX) + 'px';
             canvas.style.top = canvas.offsetTop + (y - panY) + 'px';
-            
+
             panX = x;
             panY = y;
         }
@@ -178,4 +180,5 @@ pen.init();
 colorPicker.init();
 pan.init();
 
-pan.select();
+// Select Pen Tool initially
+pen.select();
