@@ -2,9 +2,6 @@
 var canvas = document.getElementById('canv');
 var ctx = canvas.getContext('2d');
 
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-
 // Pen Tool
 var pen = {
     penColor: '#000000',
@@ -100,6 +97,8 @@ var pan = {
     drag: false,
     panX: canvas.offsetLeft,
     panY: canvas.offsetTop,
+    canvasLeft: canvas.offsetWidth - window.innerWidth,
+    canvasTop: canvas.offsetHeight - window.innerHeight,
 
     begin: function (e) {
         pan.drag = true;
@@ -124,8 +123,13 @@ var pan = {
                 y = e.clientY;
             }
 
-            canvas.style.left = canvas.offsetLeft + (x - panX) + 'px';
-            canvas.style.top = canvas.offsetTop + (y - panY) + 'px';
+            var left = canvas.offsetLeft + (x - panX);
+            if(left <= 0 && left >= -pan.canvasLeft)
+                canvas.style.left = left + 'px';
+
+            var top = canvas.offsetTop + (y - panY);
+            if(top <= 0 && top >= -pan.canvasTop)
+                canvas.style.top = top + 'px';
 
             panX = x;
             panY = y;

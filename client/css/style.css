@@ -7,7 +7,6 @@ html, body {
 
 #canv {
     background: #eee;
-    border: 5px red solid;
     position: absolute;
 }
 
@@ -60,7 +59,7 @@ html, body {
 }
 
 .tool-item.color-picker:hover #color-picker {
-    animation: come .3s;
+    animation: color-picker-entry .3s;
     display: block;
 }
 
@@ -71,7 +70,7 @@ html, body {
     display: none;
 }
 
-@keyframes come {
+@keyframes color-picker-entry {
     0% {
         display: none;
         opacity: 0;
