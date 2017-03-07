@@ -5,7 +5,7 @@ var ctx = canvas.getContext('2d');
 // Pen Tool
 var pen = {
     penColor: '#000000',
-    penThickness: 15,
+    penThickness: 10,
     drag: false,
 
     begin: function (e) {
@@ -293,6 +293,10 @@ function deselectAllTool () {
     pen.deselect();
     pan.deselect();
     eraser.deselect();
+}
+
+function setSize(size) {
+    pen.penThickness = size;
 }
 
 // Initializing tools
