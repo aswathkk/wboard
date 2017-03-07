@@ -26,6 +26,10 @@ html, body {
     cursor: url('../img/eraser.svg') 0 15, auto;
 }
 
+#canv.text {
+    cursor: text;
+}
+
 .size-val-wrap {
     padding: 1em;
     transition: all .4s;
@@ -116,6 +120,17 @@ html, body {
     border-bottom: .6em solid transparent;
     border-left: .6em solid transparent;
 }
+
+.text-tool-accept {
+    position: absolute;
+    border: none;
+    outline: none;
+    padding: 10px;
+    background: rgba(255,255,255,.5);
+    border: 1px solid #aaa;
+    font: 14px sans-serif;
+}
+
 
 .pan-view-container {
     transition: all .4s;

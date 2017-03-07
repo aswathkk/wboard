@@ -181,6 +181,81 @@ var eraser = {
 
 }
 
+// Text Tool
+var text = {
+    typing: false,
+
+    begin: function (e) {
+
+        if(text.typing) {
+            
+            text.typing = false;
+            text.rasterize();
+
+        } else {
+
+            if(e.touches) {
+                x = e.touches[0].clientX - canvas.offsetLeft;
+                y = e.touches[0].clientY - canvas.offsetTop;
+            } else {
+                x = e.clientX - canvas.offsetLeft;
+                y = e.clientY - canvas.offsetTop;
+            }
+
+            var textPsuedo = document.createElement('input');
+            textPsuedo.type = 'text';
+            textPsuedo.className = 'text-tool-accept';
+            document.body.appendChild(textPsuedo);
+            textPsuedo.style.left = x + 'px';
+            textPsuedo.style.top = y - 18.5 + 'px';
+            textPsuedo.value = 'type here';
+            textPsuedo.focus();
+            text.typing = true;
+
+            text.x = x;
+            text.y = y;
+        }
+
+    },
+
+    // Converting html element to canvas drawing
+    rasterize() {
+        var textPseudo = document.querySelector('.text-tool-accept');
+        if(textPseudo) {
+            ctx.fillStyle = pen.penColor;
+            ctx.font = '14px sans-serif';
+            ctx.fillText(textPseudo.value, text.x+11, text.y+6);
+            document.body.removeChild(textPseudo);
+        }
+    },
+
+    // Text Tool selected
+    select: function() {
+        canvas.className = 'text'; // Setting cursor
+        deselectAllTool(); // Removing Other EventListeners
+
+        document.querySelector('.tool-item.text').className = 'tool-item text active';
+
+        canvas.addEventListener('click', text.begin, false);
+    },
+    
+    deselect: function() {
+
+        document.querySelector('.tool-item.text').className = 'tool-item text';
+
+        var textPseudo = document.querySelector('.text-tool-accept');
+        if(textPseudo)
+            document.body.removeChild(textPseudo);
+
+        canvas.removeEventListener('click', text.begin, false);
+    },
+
+    // Initialize Text Tool
+    init: function() {
+        document.querySelector('.tool-item.text').addEventListener('click', text.select, false);
+    }
+}
+
 // Pan Tool
 var pan = {
     drag: false,
@@ -293,6 +368,7 @@ function deselectAllTool () {
     pen.deselect();
     pan.deselect();
     eraser.deselect();
+    text.deselect();
 }
 
 function setSize(size) {
@@ -304,6 +380,7 @@ pen.init();
 eraser.init();
 colorPicker.init();
 pan.init();
+text.init();
 
 // Select Pen Tool initially
 pen.select();
