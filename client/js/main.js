@@ -49,6 +49,8 @@ var pen = {
         canvas.className = 'pen';
         deselectAllTool(); // Removing Other EventListeners
 
+        document.querySelector('.tool-item.pen').className = 'tool-item pen active';
+
         // Touch Events
         canvas.addEventListener('touchstart', pen.begin, false);
         canvas.addEventListener('touchmove', pen.move, false);
@@ -58,9 +60,12 @@ var pen = {
         canvas.addEventListener('mousedown', pen.begin, false);
         canvas.addEventListener('mousemove', pen.move, false);
         canvas.addEventListener('mouseup', pen.stop, false);
+        canvas.addEventListener('mouseout', pen.stop, false);
     },
 
     deselect: function() {
+
+        document.querySelector('.tool-item.pen').className = 'tool-item pen';
 
         // Touch Events
         canvas.removeEventListener('touchstart', pen.begin, false);
@@ -70,7 +75,8 @@ var pen = {
         // Mouse Events
         canvas.removeEventListener('mousedown', pen.begin, false);
         canvas.removeEventListener('mousemove', pen.move, false);
-        canvas.removeEventListener('mouseup', pen.stop, false);  
+        canvas.removeEventListener('mouseup', pen.stop, false);
+        canvas.removeEventListener('mouseout', pen.stop, false); 
     },
 
     // Initialize Pen tool
@@ -133,10 +139,12 @@ var eraser = {
         eraser.drag = false;
     },
 
-    // Pen Tool selected
+    // Eraser Tool selected
     select: function () {
         canvas.className = 'eraser';
         deselectAllTool(); // Removing Other EventListeners
+
+        document.querySelector('.tool-item.eraser').className = 'tool-item eraser active';
 
         // Touch Events
         canvas.addEventListener('touchstart', eraser.begin, false);
@@ -147,9 +155,12 @@ var eraser = {
         canvas.addEventListener('mousedown', eraser.begin, false);
         canvas.addEventListener('mousemove', eraser.move, false);
         canvas.addEventListener('mouseup', eraser.stop, false);
+        canvas.addEventListener('mouseout', eraser.stop, false);
     },
 
     deselect: function() {
+
+        document.querySelector('.tool-item.eraser').className = 'tool-item eraser';
 
         // Touch Events
         canvas.removeEventListener('touchstart', eraser.begin, false);
@@ -160,9 +171,10 @@ var eraser = {
         canvas.removeEventListener('mousedown', eraser.begin, false);
         canvas.removeEventListener('mousemove', eraser.move, false);
         canvas.removeEventListener('mouseup', eraser.stop, false);  
+        canvas.removeEventListener('mouseout', eraser.stop, false);
     },
 
-    // Initialize Pen tool
+    // Initialize Eraser tool
     init: function() {
         document.querySelector('.tool-item.eraser').addEventListener('click', eraser.select, false);
     },
@@ -230,12 +242,14 @@ var pan = {
         canvas.className = 'pan'; // Setting cursor
         deselectAllTool(); // Removing Other EventListeners
 
+        document.querySelector('.tool-item.pan').className = 'tool-item pan active';
+
         pan.panView.drawImage(canvas, 0, 0, 200, 200);
         pan.panBox.style.width = window.innerWidth / 10 + 'px';
         pan.panBox.style.height = window.innerHeight / 10 + 'px';
 
         // Displaying panning view box
-        document.querySelector('.pan-view-container').style.opacity = 1;
+        document.querySelector('.pan-view-container').className = 'pan-view-container visible'
 
         // Touch Events
         canvas.addEventListener('touchstart', pan.begin, false);
@@ -246,12 +260,15 @@ var pan = {
         canvas.addEventListener('mousedown', pan.begin, false);
         canvas.addEventListener('mousemove', pan.move, false);
         canvas.addEventListener('mouseup', pan.stop, false);
+        canvas.addEventListener('mouseout', pan.stop, false);
     },
     
     deselect: function() {
 
         // Hiding panning view box
-        document.querySelector('.pan-view-container').style.opacity = 0;
+        document.querySelector('.pan-view-container').className = 'pan-view-container';
+
+        document.querySelector('.tool-item.pan').className = 'tool-item pan';
 
         // Touch Events
         canvas.removeEventListener('touchstart', pan.begin, false);
@@ -262,6 +279,7 @@ var pan = {
         canvas.removeEventListener('mousedown', pan.begin, false);
         canvas.removeEventListener('mousemove', pan.move, false);
         canvas.removeEventListener('mouseup', pan.stop, false);
+        canvas.removeEventListener('mouseout', pan.stop, false);
     },
 
     // Initialize Pan Tool
@@ -270,12 +288,14 @@ var pan = {
     }
 }
 
+// UNselect All tools
 function deselectAllTool () {
     pen.deselect();
     pan.deselect();
     eraser.deselect();
 }
 
+// Initializing tools
 pen.init();
 eraser.init();
 colorPicker.init();

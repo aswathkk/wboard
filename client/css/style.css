@@ -6,7 +6,7 @@ html, body {
 }
 
 #canv {
-    background: #eee;
+    background: #efefef;
     position: absolute;
 }
 
@@ -28,7 +28,26 @@ html, body {
 
 .pan-view-container {
     transition: all .4s;
-    opacity: 0;
+    display: none;
+}
+
+.pan-view-container.visible {
+    display: block;
+    animation: pan-view-entry .4s;
+}
+
+@keyframes pan-view-entry {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+    10% {
+        display: block;
+        opacity: .1;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 #pan-view {
@@ -57,18 +76,19 @@ html, body {
     position: fixed;
     left: 50px;
     top: 100px;
-    padding: .5em;
     box-shadow: 0 1px 5px -1px rgba(0,0,0,0.3);
 }
 
 .tool-item {
     cursor: pointer;
-    background: #fff;
     height: 1.75em;
     width: 1.75em;
     padding: .5em;
-    margin-bottom: .5em;
-    border-radius: 50%;
+    transition: all .4s;
+}
+
+.tool-item.active {
+    background: #efefef;
 }
 
 .tool-item:nth-last-child(1) {
@@ -95,8 +115,9 @@ html, body {
 
 #color-picker {
     position: absolute;
+    height: 3em;
     top: 0;
-    left: 3em;
+    left: 1em;
     display: none;
 }
 
@@ -104,7 +125,7 @@ html, body {
     0% {
         display: none;
         opacity: 0;
-        transform: translate(-4em, -3.5em) scale(.3, 0);
+        transform: translate(-3.3em, -0.5em) scale(.3, 0);
     }
     10% {
         display: block;
@@ -119,7 +140,7 @@ html, body {
 .color-picker-container {
     background: #fff;
     padding: .1em;
-    margin-left: 2em;
+    margin-left: 3em;
     box-shadow: 0 1px 5px -1px rgba(0,0,0,0.3);
 }
 
@@ -127,7 +148,7 @@ html, body {
     content: '';
     position: absolute;
     top: 1em;
-    left: .9em;
+    left: 1.9em;
     border-top: .6em solid transparent;
     border-right: .6em solid #fff;
     border-bottom: .6em solid transparent;
