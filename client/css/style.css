@@ -11,7 +11,7 @@ html, body {
 }
 
 #canv.pen {
-    cursor: url('../img/pen.svg') 0 15, auto;
+    cursor: url('../img/pen.svg') 2 22, auto;
 }
 
 #canv.pan {
@@ -74,7 +74,7 @@ html, body {
     position: absolute;
     top: 2.5em;
     left: 1em;
-    height: 3em;
+    height: 4em;
     display: none;
 }
 
