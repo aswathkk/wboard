@@ -188,8 +188,7 @@ var text = {
     begin: function (e) {
 
         if(text.typing) {
-            
-            text.typing = false;
+
             text.rasterize();
 
         } else {
@@ -202,16 +201,21 @@ var text = {
                 y = e.clientY - canvas.offsetTop;
             }
 
+            // Creating element for user input
             var textPsuedo = document.createElement('input');
             textPsuedo.type = 'text';
             textPsuedo.className = 'text-tool-accept';
             document.body.appendChild(textPsuedo);
             textPsuedo.style.left = x + 'px';
             textPsuedo.style.top = y - 18.5 + 'px';
-            textPsuedo.value = 'type here';
+            textPsuedo.style.color = pen.penColor;
             textPsuedo.focus();
-            text.typing = true;
+            textPsuedo.addEventListener('keydown', function(e) {
+                if(e.keyCode == 13)
+                    text.rasterize();
+            });
 
+            text.typing = true;
             text.x = x;
             text.y = y;
         }
@@ -224,8 +228,9 @@ var text = {
         if(textPseudo) {
             ctx.fillStyle = pen.penColor;
             ctx.font = '14px sans-serif';
-            ctx.fillText(textPseudo.value, text.x+11, text.y+6);
+            ctx.fillText(textPseudo.value, text.x + 11, text.y + 6);
             document.body.removeChild(textPseudo);
+            text.typing = false;
         }
     },
 
@@ -244,8 +249,7 @@ var text = {
         document.querySelector('.tool-item.text').className = 'tool-item text';
 
         var textPseudo = document.querySelector('.text-tool-accept');
-        if(textPseudo)
-            document.body.removeChild(textPseudo);
+        text.rasterize();
 
         canvas.removeEventListener('click', text.begin, false);
     },

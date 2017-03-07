@@ -126,7 +126,7 @@ html, body {
     border: none;
     outline: none;
     padding: 10px;
-    background: rgba(255,255,255,.5);
+    background: transparent;
     border: 1px solid #aaa;
     font: 14px sans-serif;
 }
