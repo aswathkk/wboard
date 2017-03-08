@@ -134,7 +134,8 @@ var eraser = {
 
         socket.emit('erase start', {
             x: x,
-            y: y
+            y: y,
+            lineWidth: ctx.lineWidth
         });
     },
 
@@ -413,7 +414,7 @@ var sock = {
     },
 
     startErase: function(data) {
-        ctx.lineWidth = pen.penThickness;
+        ctx.lineWidth = data.lineWidth;
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
         ctx.globalCompositeOperation = "destination-out";

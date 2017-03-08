@@ -2,7 +2,9 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
+    width: 100%;
     overflow: hidden;
+    position: fixed;
 }
 
 #canv {
@@ -288,4 +290,63 @@ html, body {
 
 #black {
     background-color: #000;
+}
+
+.clearfix {
+    clear: both;
+}
+
+@media(max-width: 767px) {
+    
+    #tools {
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .tool-item {
+        float: left;
+    }
+
+    #color-picker {
+        width: 100%;
+        left: 0;
+        top: 3em;
+    }
+
+    .color-picker-container {
+        margin: 0;
+        margin-top: .2em;
+        width: 100%;
+    }
+
+    .color-picker-container::before, .size-picker-container::before {
+        display: none;
+    }
+
+    .color {
+        float: left;
+    }
+
+    .size-val-wrap {
+        float: left
+    }
+
+    #size-picker {
+        left: 0;
+        width: 100%;
+    }
+
+    .size-picker-container {
+        margin: 0;
+        margin-top: .2em;
+        width: 100%;
+    }
+
+    #pan-view, .viewbox-container {
+        top: 0.2em;
+        right: -2.5em;
+        transform: scale(.5);
+    }
+    
 }
