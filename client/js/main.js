@@ -25,8 +25,12 @@ var pen = {
         }
         ctx.beginPath();
         ctx.moveTo(x, y);
+
         socket.emit('draw start', {
-            x: x, y: y
+            x: x,
+            y: y,
+            lineWidth: ctx.lineWidth,
+            strokeStyle: ctx.strokeStyle
         });
     },
 
@@ -42,7 +46,8 @@ var pen = {
             ctx.lineTo(x, y);
             ctx.stroke();
             socket.emit('draw', {
-                x: x, y: y
+                x: x,
+                y: y
             });
         }
     },
@@ -126,6 +131,11 @@ var eraser = {
         }
         ctx.beginPath();
         ctx.moveTo(x, y);
+
+        socket.emit('erase start', {
+            x: x,
+            y: y
+        });
     },
 
     move: function (e) {
@@ -139,6 +149,11 @@ var eraser = {
             }
             ctx.lineTo(x, y);
             ctx.stroke();
+
+            socket.emit('erase', {
+                x: x,
+                y: y
+            });
         }
     },
 
@@ -238,6 +253,13 @@ var text = {
             ctx.fillText(textPseudo.value, text.x + 11, text.y + 6);
             document.body.removeChild(textPseudo);
             text.typing = false;
+
+            socket.emit('text', {
+                text: textPseudo.value,
+                x: text.x + 11,
+                y: text.y + 6,
+                fillStyle: ctx.fillStyle
+            });
         }
     },
 
@@ -376,8 +398,8 @@ var pan = {
 
 var sock = {
     startDraw: function(data) {
-        ctx.strokeStyle = pen.penColor;
-        ctx.lineWidth = pen.penThickness;
+        ctx.strokeStyle = data.strokeStyle;
+        ctx.lineWidth = data.lineWidth;
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
         ctx.globalCompositeOperation = "source-over";
@@ -390,10 +412,33 @@ var sock = {
         ctx.stroke();
     },
 
+    startErase: function(data) {
+        ctx.lineWidth = pen.penThickness;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.strokeStyle = "rgba(0,0,0,1)";
+        ctx.beginPath();
+        ctx.moveTo(data.x, data.y);
+    },
+
+    erase: function(data) {
+        ctx.lineTo(data.x, data.y);
+        ctx.stroke();
+    },
+
+    text: function(data) {
+        ctx.fillStyle = data.fillStyle;
+        ctx.font = '14px sans-serif';
+        ctx.fillText(data.text, data.x, data.y);
+    },
+
     init: function() {
         socket.on('draw', this.draw);
         socket.on('draw start', this.startDraw);
-        // console.log(this);
+        socket.on('erase', this.erase);
+        socket.on('erase start', this.startErase);
+        socket.on('text', this.text);
     }
 }
 
@@ -415,6 +460,8 @@ eraser.init();
 colorPicker.init();
 pan.init();
 text.init();
+
+// Initializing socket.io events
 sock.init();
 
 // Select Pen Tool initially
