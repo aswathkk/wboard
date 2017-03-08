@@ -12,6 +12,7 @@
     "url": "https://github.com/aswathkk/wboard.git"
   },
   "dependencies": {
-    "express": "^4.15.0"
+    "express": "^4.15.0",
+    "socket.io": "^1.7.3"
   }
 }

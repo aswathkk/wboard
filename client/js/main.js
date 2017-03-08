@@ -1,4 +1,5 @@
 
+var socket = io();
 var canvas = document.getElementById('canv');
 var ctx = canvas.getContext('2d');
 
@@ -24,6 +25,9 @@ var pen = {
         }
         ctx.beginPath();
         ctx.moveTo(x, y);
+        socket.emit('draw start', {
+            x: x, y: y
+        });
     },
 
     move: function (e) {
@@ -37,6 +41,9 @@ var pen = {
             }
             ctx.lineTo(x, y);
             ctx.stroke();
+            socket.emit('draw', {
+                x: x, y: y
+            });
         }
     },
 
@@ -367,6 +374,29 @@ var pan = {
     }
 }
 
+var sock = {
+    startDraw: function(data) {
+        ctx.strokeStyle = pen.penColor;
+        ctx.lineWidth = pen.penThickness;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.globalCompositeOperation = "source-over";
+        ctx.beginPath();
+        ctx.moveTo(data.x, data.y);
+    },
+
+    draw: function(data) {
+        ctx.lineTo(data.x, data.y);
+        ctx.stroke();
+    },
+
+    init: function() {
+        socket.on('draw', this.draw);
+        socket.on('draw start', this.startDraw);
+        // console.log(this);
+    }
+}
+
 // UNselect All tools
 function deselectAllTool () {
     pen.deselect();
@@ -385,6 +415,7 @@ eraser.init();
 colorPicker.init();
 pan.init();
 text.init();
+sock.init();
 
 // Select Pen Tool initially
 pen.select();
