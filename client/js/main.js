@@ -2,6 +2,7 @@
 var socket = io();
 var canvas = document.getElementById('canv');
 var ctx = canvas.getContext('2d');
+var room = location.pathname.substring(1, 7);
 
 // Pen Tool
 var pen = {
@@ -30,7 +31,8 @@ var pen = {
             x: x,
             y: y,
             lineWidth: ctx.lineWidth,
-            strokeStyle: ctx.strokeStyle
+            strokeStyle: ctx.strokeStyle,
+            room: room
         });
     },
 
@@ -47,7 +49,8 @@ var pen = {
             ctx.stroke();
             socket.emit('draw', {
                 x: x,
-                y: y
+                y: y,
+                room: room
             });
         }
     },
@@ -135,7 +138,8 @@ var eraser = {
         socket.emit('erase start', {
             x: x,
             y: y,
-            lineWidth: ctx.lineWidth
+            lineWidth: ctx.lineWidth,
+            room: room
         });
     },
 
@@ -153,7 +157,8 @@ var eraser = {
 
             socket.emit('erase', {
                 x: x,
-                y: y
+                y: y,
+                room: room
             });
         }
     },
@@ -259,7 +264,8 @@ var text = {
                 text: textPseudo.value,
                 x: text.x + 11,
                 y: text.y + 6,
-                fillStyle: ctx.fillStyle
+                fillStyle: ctx.fillStyle,
+                room: room
             });
         }
     },
@@ -435,6 +441,7 @@ var sock = {
     },
 
     init: function() {
+        socket.emit('connection', {room:room});
         socket.on('draw', this.draw);
         socket.on('draw start', this.startDraw);
         socket.on('erase', this.erase);
