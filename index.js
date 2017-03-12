@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -6,6 +8,8 @@ const io = require('socket.io')(server);
 const routes = require('./routes');
 
 const port = process.env.PORT || 3000;
+
+mongoose.connect('mongodb://localhost/wboard');
 
 app.use(express.static(__dirname + '/client'));
 
