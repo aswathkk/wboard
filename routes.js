@@ -1,11 +1,24 @@
 const router = require('express').Router();
+const async = require('asyncawait/async');
+const await = require('asyncawait/await');
 
 const Room = require('./models/room');
 
-router.get('/', (req, res) => {
+// Create room with random URL
+const createRoom = async (() => {
     let room = new Room();
-    room.save((err, data) => {
-        res.redirect('/' + data._id);
+    let data;
+    try {
+        data = await (room.save());
+    } catch(err) {
+        return createRoom();
+    }
+    return data;
+});
+
+router.get('/', (req, res) => {
+    createRoom().then((room) => {
+        return res.redirect('/' + room._id);
     });
 });
 

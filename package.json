@@ -12,6 +12,7 @@
     "url": "https://github.com/aswathkk/wboard.git"
   },
   "dependencies": {
+    "asyncawait": "^1.0.6",
     "express": "^4.15.0",
     "js-randstr": "^1.0.2",
     "mongoose": "^4.8.6",
