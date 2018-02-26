@@ -11,6 +11,7 @@ export default class Eraser extends Tool {
   }
 
   select() {
+    this.deselectAll();
     this.canvas.classList.add('eraser');
     document.querySelector('.tool-item.eraser').classList.add('active');
     this.addClickEvents();

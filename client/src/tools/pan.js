@@ -14,6 +14,7 @@ export default class Pan extends Tool {
   }
 
   select() {
+    this.deselectAll();
     this.canvas.classList.add('pan');
     document.querySelector('.tool-item.pan').classList.add('active');
 

@@ -11,6 +11,7 @@ export default class Pen extends Tool {
   }
 
   select() {
+    this.deselectAll();
     this.canvas.classList.add('pen');
     document.querySelector('.tool-item.pen').classList.add('active');
 
