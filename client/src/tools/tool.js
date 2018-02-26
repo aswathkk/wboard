@@ -5,9 +5,12 @@ export default class Tool {
   }
 
   addClickEvents() {
-    this.startListener = this.start.bind(this);
-    this.stopListener = this.stop.bind(this);
-    this.moveListener = this.move.bind(this);
+    if(this.start)
+      this.startListener = this.start.bind(this);
+    if(this.stop)
+      this.stopListener = this.stop.bind(this);
+    if(this.move)
+      this.moveListener = this.move.bind(this);
 
     let start = this.startListener;
     let stop = this.stopListener;
