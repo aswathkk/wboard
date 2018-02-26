@@ -29,12 +29,12 @@ export default class Tool {
     let move = this.move.bind(this);
 
     // Touch Events
-    this.canvas.removeEventListener('touchstart', begin, false);
+    this.canvas.removeEventListener('touchstart', start, false);
     this.canvas.removeEventListener('touchmove', move, false);
     this.canvas.removeEventListener('touchend', stop, false);
 
     // Mouse Events
-    this.canvas.removeEventListener('mousedown', begin, false);
+    this.canvas.removeEventListener('mousedown', start, false);
     this.canvas.removeEventListener('mousemove', move, false);
     this.canvas.removeEventListener('mouseup', stop, false);
     this.canvas.removeEventListener('mouseout', stop, false); 
