@@ -1,4 +1,5 @@
 import Tool from './tool';
+import { room, socket } from '../shared';
 
 export default class Eraser extends Tool {
   constructor(canvas) {
@@ -35,6 +36,12 @@ export default class Eraser extends Tool {
       }
       this.ctx.lineTo(x, y);
       this.ctx.stroke();
+
+      socket.emit('erase', {
+        x: x,
+        y: y,
+        room: room
+      });
     }
   }
 
@@ -55,6 +62,13 @@ export default class Eraser extends Tool {
     }
     this.ctx.beginPath();
     this.ctx.moveTo(x, y);
+
+    socket.emit('erase start', {
+      x: x,
+      y: y,
+      lineWidth: this.thickness,
+      room: room
+    });
   }
 
   stop() {

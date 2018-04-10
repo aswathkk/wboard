@@ -1,4 +1,5 @@
 import Tool from './tool';
+import { room, socket } from '../shared';
 
 export default class Text extends Tool {
   constructor(canvas) {
@@ -63,6 +64,14 @@ export default class Text extends Tool {
       this.ctx.fillText(textPseudo.value, this.x + 11, this.y + 6);
       document.body.removeChild(textPseudo);
       this.typing = false;
+
+      socket.emit('text', {
+        text: textPseudo.value,
+        x: this.x + 11,
+        y: this.y + 6,
+        fillStyle: this.ctx.fillStyle,
+        room: room
+      });
     }
   }
 }

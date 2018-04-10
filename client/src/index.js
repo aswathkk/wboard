@@ -1,16 +1,19 @@
 import './style.css';
 
+import Room from './room';
 import Pen from './tools/pen';
 import Eraser from './tools/eraser';
 import Text from './tools/text';
 import Pan from './tools/pan';
+import SocketManager from './SocketManager';
+import { canvas } from './shared';
 
-const canvas = document.getElementById('canv');
-
-let pen = new Pen(canvas);
-let eraser = new Eraser(canvas);
-let text = new Text(canvas);
-let pan = new Pan(canvas);
+const room = new Room();
+const pen = new Pen(canvas);
+const eraser = new Eraser(canvas);
+const text = new Text(canvas);
+const pan = new Pan(canvas);
+const socketMgr = new SocketManager();
 
 let deselectAll = () => {
   pen.deselect();

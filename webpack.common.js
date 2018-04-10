@@ -1,21 +1,20 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-const outDir = 'client';
 
 module.exports = {
-  entry: './' + outDir + '/src/index.js',
+  entry: ['./client/src/index.js'],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, outDir, 'dist')
-  },
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: './' + outDir + 'dist'
+    path: path.resolve(__dirname, 'client', 'dist')
   },
   module: {
     rules: [
+      {
+        test: /\.html$/,
+        use: {
+          loader: 'html-loader'
+        }
+      },
       {
         test: /\.css$/,
         use: [
@@ -25,13 +24,16 @@ module.exports = {
       },
       {
         test: /\.(jpg|png|svg)$/,
-        use: [
-          'file-loader'
-        ]
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]'
+          }
+        }
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /server/],
         use: {
           loader: 'babel-loader',
           options: {
@@ -42,9 +44,8 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin([ './' + outDir + '/dist']),
     new HtmlWebpackPlugin({
-      template: outDir + '/src/index.html'
+      template: 'client/src/index.html'
     })
   ]
-}
+};

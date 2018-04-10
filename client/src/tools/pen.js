@@ -1,4 +1,5 @@
 import Tool from './tool';
+import { room, socket } from '../shared';
 
 export default class Pen extends Tool {
   constructor(canvas) {
@@ -36,6 +37,11 @@ export default class Pen extends Tool {
       }
       this.ctx.lineTo(x, y);
       this.ctx.stroke();
+      socket.emit('draw', {
+        x: x,
+        y: y,
+        room: room
+      });
     }
   }
 
@@ -56,6 +62,14 @@ export default class Pen extends Tool {
     }
     this.ctx.beginPath();
     this.ctx.moveTo(x, y);
+
+    socket.emit('draw start', {
+      x: x,
+      y: y,
+      lineWidth: this.ctx.lineWidth,
+      strokeStyle: this.ctx.strokeStyle,
+      room: room
+    });
   }
 
   stop() {

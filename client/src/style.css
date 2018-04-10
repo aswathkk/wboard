@@ -14,19 +14,19 @@ html, body {
 }
 
 #canv.pen {
-    cursor: url('../img/pen.svg') 2 22, auto;
+    cursor: url('img/pen.svg') 2 22, auto;
 }
 
 #canv.pan {
-    cursor: url('../img/pan.svg') 0 15, auto;
+    cursor: url('img/pan.svg') 0 15, auto;
 }
 
 #canv.pan.grab {
-    cursor: url('../img/grab.svg') 0 15, auto;
+    cursor: url('img/grab.svg') 0 15, auto;
 }
 
 #canv.eraser {
-    cursor: url('../img/eraser.svg') 0 15, auto;
+    cursor: url('img/eraser.svg') 0 15, auto;
 }
 
 #canv.text {
