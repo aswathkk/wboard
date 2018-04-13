@@ -2,9 +2,8 @@ import { setRoom } from './shared';
 
 export default class Room {
   constructor() {
-    if(window.location.hash) {
-      let room = window.location.hash.slice(2);
-      // window.history.pushState(null, null, this.id);
+    let room = location.href.slice(location.href.lastIndexOf('/') + 1);
+    if(room.length == 6) {
       this.id = room;
       setRoom(this.id);
     } else {

@@ -16,6 +16,7 @@ module.exports = merge(common, {
     proxy: {
       '/api': 'http://localhost:3000'
     },
+    historyApiFallback: true,
     contentBase: path.join(__dirname, 'client', 'dist'),
     port: 8080,
     hot: true,
