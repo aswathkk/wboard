@@ -8,7 +8,7 @@ export default class Room {
       this.id = room;
       setRoom(this.id);
     } else {
-      fetch('http://localhost:3000/api/addRoom')
+      fetch('/api/addRoom')
       .then(res => res.json())
       .then(res => {
         this.id = res.roomid;
