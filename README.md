@@ -1,6 +1,6 @@
-#wBoard - Realtime whiteboard
+# wBoard - Realtime whiteboard
 
-##Setup
+## Setup
 Clone the repository
 ```sh
 git clone https://github.com/aswathkk/wboard
@@ -17,10 +17,10 @@ Start server
 ```sh
 yarn start
 ```
-Now, visit http://localhost:3000 to preview the app
+Now, visit `http://localhost:3000` to preview the app
 Note: Make sure to turn on the mongodb server while starting server.
 
-##Development mode
+## Development mode
 ```sh
 yarn run dev
 ```
