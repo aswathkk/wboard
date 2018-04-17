@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const app = express();
 const server = require('http').createServer(app);
@@ -10,11 +11,9 @@ const routes = require('./routes');
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV;
 
-if(env === 'dev') {
-  // dev
-} else {
-  app.use(express.static(__dirname + '/client/dist'));
-}
+mongoose.Promise = global.Promise;
+
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -23,7 +22,12 @@ app.use((req, res, next) => {
 
 app.use('/api', routes);
 
-mongoose.connect('mongodb://localhost/wboard');
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+});
+
+mongoose.connect('mongodb://localhost/wboard')
+.then(() => console.log('connected to DB'), err => console.log(err));
 
 io.on('connect', socket => {
     // Adding user to a room
